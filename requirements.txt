@@ -1,0 +1,18 @@
+# Flask and extensions
+Flask==2.3.3
+Flask-SQLAlchemy==3.0.5
+Flask-Login==0.6.3
+Flask-Migrate==4.0.5
+Flask-WTF==1.2.1  # For CSRF protection
+
+# Database
+SQLAlchemy==2.0.21
+alembic==1.13.0   # Used by Flask-Migrate
+
+# Security
+Werkzeug==2.3.7   # For password hashing
+python-dotenv==1.0.0  # For environment variables
+
+# Development tools
+pytest==7.4.3
+python-dateutil==2.8.2 

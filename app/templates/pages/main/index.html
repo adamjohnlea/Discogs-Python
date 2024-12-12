@@ -1,0 +1,34 @@
+{% extends 'base/layout.html' %}
+
+{% block title %}Record Collection{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="bg-white shadow-lg rounded-lg p-6">
+        <h1 class="text-3xl font-bold mb-4">Welcome to Record Collection</h1>
+        
+        {% if current_user.is_authenticated %}
+            <p class="text-gray-600 mb-4">
+                Welcome back, {{ current_user.username }}! 
+                {% if current_user.is_discogs_connected %}
+                    Your Discogs account is connected.
+                {% else %}
+                    <a href="{{ url_for('auth.edit_profile') }}" 
+                       class="text-blue-600 hover:underline">
+                        Connect your Discogs account
+                    </a>
+                    to start managing your collection.
+                {% endif %}
+            </p>
+        {% else %}
+            <p class="text-gray-600 mb-4">
+                Please 
+                <a href="{{ url_for('auth.login') }}" class="text-blue-600 hover:underline">login</a>
+                or
+                <a href="{{ url_for('auth.register') }}" class="text-blue-600 hover:underline">register</a>
+                to manage your record collection.
+            </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

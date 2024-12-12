@@ -1,0 +1,91 @@
+<div id="discogs-section"
+     hx-trigger="discogs-disconnected from:body"
+     hx-get="{{ url_for('auth.profile') }}"
+     hx-target="body">
+    <form method="POST" action="{{ url_for('auth.edit_profile') }}" class="w-full">
+        <input type="hidden" name="form_type" value="discogs">
+        <div class="space-y-6">
+            <div>
+                <label for="discogs_username" class="block text-sm font-medium text-gray-700 mb-1">
+                    Discogs Username
+                </label>
+                <input type="text" 
+                       name="discogs_username" 
+                       id="discogs_username"
+                       value="{{ current_user.discogs_username or '' }}"
+                       class="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm 
+                              focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                              bg-gray-100 text-gray-900"
+                       required>
+            </div>
+
+            <div>
+                <label for="consumer_key" class="block text-sm font-medium text-gray-700 mb-1">
+                    Consumer Key
+                </label>
+                <input type="text" 
+                       name="consumer_key" 
+                       id="consumer_key"
+                       value="{{ current_user.discogs_consumer_key or '' }}"
+                       class="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm 
+                              focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                              bg-gray-100 text-gray-900"
+                       required>
+            </div>
+
+            <div>
+                <label for="consumer_secret" class="block text-sm font-medium text-gray-700 mb-1">
+                    Consumer Secret
+                </label>
+                <input type="text" 
+                       name="consumer_secret" 
+                       id="consumer_secret"
+                       value="{{ current_user.discogs_consumer_secret or '' }}"
+                       class="mt-1 block w-full px-4 py-3 rounded-md border-gray-300 shadow-sm 
+                              focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                              bg-gray-100 text-gray-900"
+                       required>
+            </div>
+
+            {% if errors %}
+                <div class="text-red-600 text-sm bg-red-50 p-3 rounded-md">
+                    <ul class="list-disc list-inside">
+                        {% for error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if current_user.is_discogs_connected %}
+                <div class="flex justify-between items-center">
+                    <button type="submit" 
+                            class="py-3 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700
+                                   focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                                   font-medium transition-colors">
+                        Update Settings
+                    </button>
+                    <button type="button"
+                            hx-post="{{ url_for('auth.disconnect_discogs') }}"
+                            hx-confirm="Are you sure you want to disconnect your Discogs account?"
+                            class="text-red-600 hover:text-red-800">
+                        Disconnect Account
+                    </button>
+                </div>
+            {% else %}
+                <div class="flex justify-between items-center">
+                    <button type="submit" 
+                            class="py-3 px-6 bg-blue-600 text-white rounded-md hover:bg-blue-700
+                                   focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                                   font-medium transition-colors">
+                        Connect Account
+                    </button>
+                    <a href="{{ url_for('auth.profile') }}" 
+                       class="text-gray-600 hover:text-gray-800">
+                        Cancel
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </form>
+</div> 

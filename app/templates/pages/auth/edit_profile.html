@@ -1,0 +1,37 @@
+{% extends 'base/layout.html' %}
+
+{% block title %}Edit Profile - Record Collection{% endblock %}
+
+{% block content %}
+<div class="container mx-auto max-w-2xl px-4">
+    <div class="mb-8">
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-2xl font-bold">Edit Profile</h1>
+            <a href="{{ url_for('auth.profile') }}" 
+               class="text-gray-600 hover:text-gray-800">
+                Back to Profile
+            </a>
+        </div>
+
+        <div class="space-y-8">
+            <!-- Basic Information -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-lg font-semibold mb-4">Basic Information</h2>
+                {% include 'partials/auth/basic_info_form.html' %}
+            </div>
+
+            <!-- Password Change -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-lg font-semibold mb-4">Change Password</h2>
+                {% include 'partials/auth/password_form.html' %}
+            </div>
+
+            <!-- Discogs Integration -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-lg font-semibold mb-4">Discogs Integration</h2>
+                {% include 'partials/auth/discogs_form.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

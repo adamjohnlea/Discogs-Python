@@ -1,0 +1,57 @@
+{% extends 'base/layout.html' %}
+
+{% block title %}Profile - Record Collection{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold">Your Profile</h1>
+        <a href="{{ url_for('auth.edit_profile') }}" 
+           class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+            Edit Profile
+        </a>
+    </div>
+
+    <div class="space-y-6">
+        <div class="bg-gray-50 p-6 rounded-lg">
+            <h2 class="text-lg font-semibold mb-4">Account Information</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="text-gray-600">Username:</div>
+                <div>{{ user.username }}</div>
+                <div class="text-gray-600">Email:</div>
+                <div>{{ user.email }}</div>
+                <div class="text-gray-600">Member since:</div>
+                <div>{{ user.created_at.strftime('%B %d, %Y') }}</div>
+            </div>
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-lg">
+            <h2 class="text-lg font-semibold mb-4">Discogs Integration</h2>
+            {% if user.is_discogs_connected %}
+                <div class="flex items-center justify-between">
+                    <div class="text-green-600">
+                        Connected as: {{ user.discogs_username }}
+                    </div>
+                    <form hx-post="{{ url_for('auth.disconnect_discogs') }}"
+                          hx-confirm="Are you sure you want to disconnect your Discogs account?">
+                        <button type="submit" 
+                                class="text-red-600 hover:text-red-800">
+                            Disconnect
+                        </button>
+                    </form>
+                </div>
+            {% else %}
+                <div class="flex items-center justify-between">
+                    <div class="text-gray-600">
+                        Not connected to Discogs
+                    </div>
+                    <a href="{{ url_for('auth.edit_profile') }}" 
+                       class="text-blue-600 hover:text-blue-800">
+                        Connect Account
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 
